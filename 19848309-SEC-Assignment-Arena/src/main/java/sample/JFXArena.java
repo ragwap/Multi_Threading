@@ -1,7 +1,5 @@
 package sample;
 
-import ai_implementations.AIImplementationRobA;
-import ai_implementations.AIImplementationRobB;
 import javafx.scene.canvas.*;
 import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
@@ -66,17 +64,10 @@ public class JFXArena extends Pane
      * You will probably need to significantly modify this method. Currently it just serves as a
      * demonstration.
      */
-//    public void setRobotPosition(int x, int y, int x2, int y2)
-//    {
-//        finalRoboX = x;
-//        finalRoboY = y;
-//        finalRobo2X = x2;
-//        finalRobo2Y = y2;
-//
-////        UpdateArena();
-//        requestLayout();
-//        layoutChildren();
-//    }
+    public void setRobotPosition(int x, int y)
+    {
+
+    }
 
 
 
@@ -135,6 +126,7 @@ public class JFXArena extends Pane
 //        drawLine(gfx,Main.robotInfoB.getX(), Main.robotInfoB.getY(), Main.robotInfoB.getX() - 1, Main.robotInfoB.getY() - 0);
     }
 
+    /** Each AI calls this method to Update the arena when the robots move */
     public void UpdateArena()
     {
         GraphicsContext gfx = canvas.getGraphicsContext2D();
@@ -149,8 +141,12 @@ public class JFXArena extends Pane
         layoutChildren();
     }
 
+    /** This method is used by the AIs to fire shots on the opponent.
+     * Note that this does not detect whether the shot is struck on anything in the arena
+     * Will be triggered only when the robots are just one cell away from each other */
     public void Shoot() {
         GraphicsContext gfx = canvas.getGraphicsContext2D();
+        UpdateArena();
         if (((Main.robotInfoA.getY() - Main.robotInfoB.getY()) == 0) || ((Main.robotInfoB.getY() - Main.robotInfoA.getY()) == 0)) {
             if (((Main.robotInfoA.getX() - Main.robotInfoB.getX()) == -1)) {
                 drawLine(gfx, Main.robotInfoA.getX(), Main.robotInfoA.getY(), Main.robotInfoA.getX() + 1, Main.robotInfoA.getY());
@@ -172,12 +168,6 @@ public class JFXArena extends Pane
             }
         }
     }
-
-//    public void StopShooting() {
-//        GraphicsContext gfx = canvas.getGraphicsContext2D();
-//        drawLine(gfx, 0, 0, 0, 0);
-//        drawLine(gfx, 0, 0, 0, 0);
-//    }
 
     /**
      * Draw an image in a specific grid location. *Only* call this from within layoutChildren().

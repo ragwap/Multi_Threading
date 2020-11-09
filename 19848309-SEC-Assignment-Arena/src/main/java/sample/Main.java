@@ -18,7 +18,6 @@ import java.util.concurrent.Executors;
 
 public class Main extends Application {
 
-    //    private static Object monitor = new Object();
     public static RobotInfo robotInfoA = new RobotInfo();
     public static RobotInfo robotInfoB = new RobotInfo();
 
@@ -35,27 +34,32 @@ public class Main extends Application {
         AIImplementationRobA robA = new AIImplementationRobA();
         AIImplementationRobB robB = new AIImplementationRobB();
 
+        /** Set values for the first robot */
         robotInfoA.setName("A");
-        robotInfoA.setX(0);
-        robotInfoA.setY(5);
+        robotInfoA.setX(1);
+        robotInfoA.setY(7);
         robotInfoA.setHealth(100);
 
+        /** Set values for the second robot */
         robotInfoB.setName("B");
         robotInfoB.setX(4);
         robotInfoB.setY(7);
         robotInfoB.setHealth(100);
 
+        /**Adding the robots into an array */
         rbArray[0]=robotInfoA;
         rbArray[1]=robotInfoB;
 
         robotControlA.setRobot(robotInfoA);
         robotControlB.setRobot(robotInfoB);
 
+        /**Thread for Robot A */
         Thread threadA = new Thread(() -> {
             robA.runAI(robotControlA);
             notifyAll();
         });
 
+        /**Thread for Robot B */
         Thread threadB = new Thread(() -> {
             robB.runAI(robotControlB);
             notifyAll();
@@ -70,11 +74,10 @@ public class Main extends Application {
         toolbar.getItems().addAll(btn1, btn2);
 
         ExecutorService exService = Executors.newFixedThreadPool(2);
+
+        /** Running the threads */
         btn1.setOnAction((event) ->
         {
-//            threadA.start();
-//            threadB.start();
-
             exService.execute(threadA);
             exService.execute(threadB);
         });
@@ -91,7 +94,6 @@ public class Main extends Application {
         });
 
         logger.appendText("Welcome to Robofest\n");
-//        logger.appendText("World\n");
 
         SplitPane splitPane = new SplitPane();
         splitPane.getItems().addAll(arena, logger);

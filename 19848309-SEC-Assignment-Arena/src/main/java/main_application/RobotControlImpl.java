@@ -81,7 +81,6 @@ public class RobotControlImpl implements RobotControl {
     public boolean fire(int x, int y) {
         if ((Math.abs(ri.getX() - x) <= 1) && (Math.abs(ri.getY() - y) <= 1)) {
             this.isFire = true;
-            System.out.println(this.isFire);
         }
         else {
             this.isFire = false;
